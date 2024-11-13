@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "paths": {
+      "@Pool": [
+        "./src/db/db.ts"
+      ],
+      "@types/*": [
+        "./src/types/*"
+      ],
+      "@routers/*": [
+        "./src/routers/*"
+      ],
+      "@validation/*": [
+        "./src/validation/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ],
+      "@middleware/*": [
+        "./src/middleware/*"
+      ],
+    }
+  }
+}
