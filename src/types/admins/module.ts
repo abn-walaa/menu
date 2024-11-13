@@ -1,13 +1,6 @@
-export type adminInfo = {
-    name: String
-}
-export type insertOneInput = {
-    name: String
-}
-export type insertOneOutput = { age: 18 }
+export type insertOne = (name: string, password: string, email: string) =>
+    Promise<{ id: number, name: string, email: string }>;
 
-export type insertOne = (name: string) => Promise<{ age: number }>
 
-export const s: insertOne = async (name) => {
-    return { age: 20 };
-}
+export type genToken = (user_id: number, ip: string, user_agent: string) =>
+    Promise<{ token: string }>
