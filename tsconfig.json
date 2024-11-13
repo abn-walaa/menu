@@ -7,7 +7,7 @@
       "@Pool": [
         "./src/db/db.ts"
       ],
-      "@types/*": [
+      "@InnerTypes/*": [
         "./src/types/*"
       ],
       "@routers/*": [
