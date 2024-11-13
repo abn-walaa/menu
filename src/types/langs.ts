@@ -1,6 +1,3 @@
-export type insertinput = {
-    name: String
-}
-export type insertOutput = Promise<{ age: number }>
+export type insert = (name: string) =>
+    Promise<{ id: number}>;
 
-export type insert = (input: insertinput) => insertOutput
