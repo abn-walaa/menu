@@ -35,8 +35,9 @@ CREATE TABLE IF NOT EXISTS public.plans
 CREATE TABLE IF NOT EXISTS public.langs
 (
     id serial NOT NULL,
-    name integer NOT NULL,
-    CONSTRAINT user_payment_pkey PRIMARY KEY (id)
+    name text NOT NULL,
+    CONSTRAINT user_payment_pkey PRIMARY KEY (id),
+    CONSTRAINT name_unique UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS public.user_roll
