@@ -22,7 +22,7 @@ app.onError((err, c) => {
   if (err instanceof DatabaseError) {
     console.error(err.constraint)
   }
-  console.error(err.stack)
+  console.error(err.stack,)
   return c.json({
     status: "done",
     message: err.message,

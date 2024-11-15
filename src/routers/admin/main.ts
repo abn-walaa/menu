@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { logAdmin } from "./log";
 import authAdmin from "@helpers/authAdmin";
 import * as  types from "@InnerTypes/admins/module";
+import { handlingUsers } from "./handlingUsers";
 const adminRouter = new Hono<{
     Variables: {
         user: types.adminInfo,
@@ -10,6 +11,10 @@ const adminRouter = new Hono<{
 }>();
 // log in
 adminRouter.route('/log', logAdmin);
+// info
+adminRouter.use(authAdmin)
+adminRouter.get("/info", (c) => c.json(c.var.user));
 // 
-adminRouter.get("/aa", authAdmin, (c) => c.json({ user: c.var.user, token: c.var.token }))
+adminRouter.route("/users", handlingUsers);
+
 export default adminRouter

@@ -19,6 +19,7 @@ app.post('/in', zValidator("json", zAdmin.login, zodErrorHanlding), async (c) =>
     const { email, password } = c.req.valid("json");
     const user = await AdminDb.checkUser(email, password);
     const token = await AdminDb.genToken(user.id);
+
     return c.json({ token, ...user })
 })
 
