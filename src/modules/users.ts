@@ -60,7 +60,9 @@ export const getAll: types.getAll = async (next) => {
         select id,email,name from users 
         ${next !== undefined ? 'where id<$1' : ""}
         order by id desc
+        limit 10
         `, next !== undefined ? [next] : [])
+
     return rows
 }
 async function checkEmail(email: string): Promise<boolean> {

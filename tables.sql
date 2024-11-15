@@ -30,11 +30,18 @@ CREATE TABLE IF NOT EXISTS users_tokens (
 );
 
 
-CREATE TABLE IF NOT EXISTS public.langs
-(
+CREATE TABLE IF NOT EXISTS public.langs(
     id serial NOT NULL,
     name text NOT NULL,
     CONSTRAINT user_payment_pkey PRIMARY KEY (id),
     CONSTRAINT name_unique UNIQUE (name)
+);
+
+CREATE TABLE IF NOT EXISTS plans (
+    id SERIAL PRIMARY KEY,
+    name text NOT NULL,
+    symbol text NOT NULL,
+    time TIMESTAMP DEFAULT NOW(),
+    admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
 

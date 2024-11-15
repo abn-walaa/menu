@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { symbol, z } from "zod";
 // log Router
 export const logup = z.object({
     name: z.string().min(2).max(64),
@@ -18,4 +18,9 @@ export const addingUser = z.object({
 })
 export const next = z.object({
     next: z.number().gte(0).optional()
+})
+// plans handling 
+export const plans = z.object({
+    name: z.string().min(1),
+    symbol: z.string(),
 })

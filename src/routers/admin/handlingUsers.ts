@@ -28,12 +28,9 @@ app.get('/', zValidator("query", zAdmin.next, zodErrorHanlding), async (c) => {
     return c.json(users)
 
 })
-// app.post('/in', zValidator("json", zAdmin.login, zodErrorHanlding), async (c) => {
-//     const { email, password } = c.req.valid("json");
-//     const user = await UserDb.checkUser(email, password);
-//     const token = await UserDb.genToken(user.id);
-//     return c.json({ token, ...user })
-// })
+
+// adding restrount
+// app.post('/restrant', zValidator('json'))
 
 
 export default app
