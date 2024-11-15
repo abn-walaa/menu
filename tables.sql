@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS  admins(
 CREATE TABLE IF NOT EXISTS admins_tokens (
     id SERIAL PRIMARY KEY,
     token text NOT NULL,
-
     time TIMESTAMP DEFAULT NOW() ,
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
@@ -45,3 +44,28 @@ CREATE TABLE IF NOT EXISTS plans (
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
 
+
+CREATE TABLE IF NOT EXISTS public.textkeys
+(
+    id serial PRIMARY KEY,
+);
+CREATE TABLE IF NOT EXISTS public.translation
+(
+    id serial PRIMARY KEY,
+    text text NOT NULL,
+    lang_id integer NOT NULL,
+    textkeys_id integer NOT NULL,
+);
+ALTER TABLE IF EXISTS public.translation
+    ADD CONSTRAINT context_id_forign FOREIGN KEY (textkey_id)
+    REFERENCES public.textkeys (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public.translation
+    ADD CONSTRAINT lang_id_forign FOREIGN KEY (lang_id)
+    REFERENCES public.langs (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
