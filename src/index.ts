@@ -1,19 +1,15 @@
 import { Hono, } from 'hono'
 import { HTTPException, } from 'hono/http-exception'
 import { showRoutes, } from 'hono/dev'
+import  langs from "@routers/langs"
+
 import Admin from '@routers/admin/log'
 import { DatabaseError } from "pg"
 const app = new Hono({
-  // getPath: (req) => {
-  //   const result = req.url.match(/(?:http[s]*\:\/\/)*(.*?)\./i);
-
-  //   if (result !== null)
-  //     return '/subdomin/' + result[1]
-  //   return req
-  // },
+  
 });
 
-app.route('/admin', Admin)
+
 app.get('/subdomin/*', (c) => c.text("hello sub   " + c.req.path));
 
 app.get('/*', (c) => {
@@ -25,6 +21,12 @@ app.get('/*', (c) => {
   })
 });
 
+
+
+
+
+app.route('/admin', Admin)
+app.route('/langs',langs);
 app.onError((err, c) => {
   // console.log(err.constructor.name)
   // console.log(err)
@@ -43,7 +45,11 @@ showRoutes(app, {
   verbose: true,
 })
 
+
 export default {
+  
   fetch: app.fetch,
+
   port: 3000
+
 }

@@ -13,3 +13,11 @@ CREATE TABLE IF NOT EXISTS admins_tokens (
     time TIMESTAMP DEFAULT NOW() ,
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
+
+CREATE TABLE IF NOT EXISTS public.langs
+(
+    id serial NOT NULL,
+    name text NOT NULL,
+    CONSTRAINT user_payment_pkey PRIMARY KEY (id),
+    CONSTRAINT name_unique UNIQUE (name)
+);
