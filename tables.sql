@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS  admins(
 CREATE TABLE IF NOT EXISTS admins_tokens (
     id SERIAL PRIMARY KEY,
     token text NOT NULL,
-    ip text NOT NULL ,
-    user_agent text NOT Null ,
+
     time TIMESTAMP DEFAULT NOW() ,
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );

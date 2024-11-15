@@ -1,12 +1,16 @@
 import Pool from "@Pool";
-import * as ErrorHandles from "@InnerTypes/error/error"
+import *as JWT from 'hono/jwt'
 import * as  types from "@InnerTypes/admins/module";
 import validator = require("validator");
+import ErrorHanlding from "@InnerTypes/error/error";
 
 
 export const insertOne: types.insertOne = async (name, password, email) => {
     if (!name.trim() || !password.trim() || password.length < 8 || !validator.isEmail(email))
-        throw new Error(ErrorHandles.errorMessage.mssing_info)
+        throw new Error(ErrorHanlding.mssing_info);
+    if (!(await checkEmail(email))) {
+        throw new Error(ErrorHanlding.email_used);
+    }
     const newPassword = await Bun.password.hash(password);
 
     const { rows } = await Pool.query<{ id: number }>(`
@@ -16,6 +20,37 @@ export const insertOne: types.insertOne = async (name, password, email) => {
 }
 
 
-// export const genToken: types.genToken = async (user_id,ip,user_agent,)=>{
+export const genToken: types.genToken = async (user_id) => {
+    if (!user_id) throw new Error(ErrorHanlding.mssing_info);
+    const token = await JWT.sign({
+        exp: (Math.floor(Date.now() / 1000) + 60 * 60 * 24 * (process.env.JWT_EXPIRE ? Number(process.env.JWT_EXPIRE) : 30)),
+        user_id
+    }, process.env.JWT_KEY ?? "test")
+    await Pool.query(`insert into admins_tokens(token,admin_id) values($1,$2)`, [token, user_id])
+    return token
+}
 
-// }
+export const checkUser: types.checkUser = async (email, password) => {
+    if (!email.trim() || !password.trim) throw new Error(ErrorHanlding.mssing_info);
+    const { rows } = await Pool.query<types.adminInfo>(`
+        select id,password,email,name from admins where email=$1
+        `, [email])
+    if (rows.length === 0) throw new Error(ErrorHanlding.email_not_found)
+    if (!(await Bun.password.verify(password, rows[0].password)))
+        throw new Error(ErrorHanlding.invalid_password)
+    const user = rows[0];
+    return { email: user.email, id: user.id, name: user.name }
+}
+
+async function checkEmail(email: string): Promise<boolean> {
+    if (!email.trim()) throw new Error(ErrorHanlding.mssing_info);
+    const { rows } = await Pool.query(
+        `
+        select id from admins where email=$1
+        `, [email])
+    if (rows.length === 0) {
+        return true
+    }
+    return false
+}
+
