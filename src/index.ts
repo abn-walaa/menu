@@ -1,29 +1,33 @@
 import { Hono, } from 'hono'
 import { HTTPException, } from 'hono/http-exception'
 import { showRoutes, } from 'hono/dev'
+import * as langs from "@routers/langs"
 
-const app = new Hono({
-  getPath: (req) => {
-    const result = req.url.match(/(?:http[s]*\:\/\/)*(.*?)\./i);
+const app = new Hono(
+//   {
+//   getPath: (req) => {
+//     const result = req.url.match(/(?:http[s]*\:\/\/)*(.*?)\./i);
 
-    if (result !== null)
-      return '/subdomin/' + result[1]
-    return req.url
-  },
-});
+//     if (result !== null)
+//       return '/subdomin/' + result[1]
+//     return req.url
+//   },
+// }
+);
 
-app.get('/subdomin/*', (c) => c.text("hello sub   " + c.req.path));
+//app.get('/subdomin/*', (c) => c.text("hello sub   " + c.req.path));
 
-app.get('/*', (c) => {
-  console.log("-----------------------");
-  throw new HTTPException(500, {
-    message: ":D", cause: {
-      hello: "aa"
-    }
-  })
-  return c.text('Matched route with .r');
-});
+// app.get('/*', (c) => {
+//   console.log("-----------------------");
+//   throw new HTTPException(500, {
+//     message: ":D", cause: {
+//       hello: "aa"
+//     }
+//   })
+//   return c.text('Matched route with .r');
+// });
 
+app.route('/langs',langs.default);
 app.onError((err, c) => {
   return c.json({
     status: "done",
@@ -36,7 +40,9 @@ showRoutes(app, {
   verbose: true,
 })
 
+
 export default {
+  
   fetch: app.fetch,
-  port: 3003
+  port: 3001
 }
