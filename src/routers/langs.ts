@@ -1,5 +1,8 @@
 import { Hono } from "hono";
 import * as langs from "@modules/langs"
+import zodErrorHanlding from "@helpers/errorHandling";
+import * as zlangs from "@validation/langs";
+import { zValidator } from "@hono/zod-validator";
 
 const app = new Hono();
 
@@ -13,7 +16,6 @@ app.post('/insert', async (c) => {
 
 
 app.get('/getall', async (c) => {
-
         const languages = await langs.getall();
         return c.json(languages, 200);
 

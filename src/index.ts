@@ -14,6 +14,9 @@ const app = new Hono({
 
 
 
+
+
+
 app.route('/admin', adminRouter)
 app.route('/langs', langs);
 app.onError((err, c) => {
@@ -28,7 +31,7 @@ app.onError((err, c) => {
     message: err.message,
     code: err instanceof HTTPException ? err.status : 400,
     cause: err.cause
-  }, err instanceof HTTPException ? err.status : 400)
+  })
 })
 
 showRoutes(app, {

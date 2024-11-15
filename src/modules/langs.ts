@@ -1,14 +1,12 @@
 import Pool from "@Pool";
 import * as types from "@InnerTypes/langs";
-import ErrorHanlding from "@InnerTypes/error/error";
-
-
+import * as ErrorHandles from "@InnerTypes/error/error";
 
 
 export const insertOne: types.insert = async (name) => {
 
     if (!name) {
-        throw new Error(ErrorHanlding.mssing_info)
+        throw new Error(ErrorHandles.mssing_info)
     }
     const { rows } = await Pool.query<{ id: number }>(`INSERT INTO langs (name) VALUES ($1) RETURNING id`, [name]);
     return { id: rows[0].id };
