@@ -32,7 +32,7 @@ export const genToken: types.genToken = async (user_id) => {
 
 export const checkUser: types.checkUser = async (email, password) => {
     if (!email.trim() || !password.trim) throw new Error(ErrorHanlding.mssing_info);
-    const { rows } = await Pool.query<types.adminInfo>(`
+    const { rows } = await Pool.query<types.adminLoginInfo>(`
         select id,password,email,name from admins where email=$1
         `, [email])
     if (rows.length === 0) throw new Error(ErrorHanlding.email_not_found)
@@ -40,6 +40,17 @@ export const checkUser: types.checkUser = async (email, password) => {
         throw new Error(ErrorHanlding.invalid_password)
     const user = rows[0];
     return { email: user.email, id: user.id, name: user.name }
+}
+
+
+export const findByToken: types.findByToken = async (user_id, token) => {
+    if (!user_id || !token.trim()) throw new Error(ErrorHanlding.mssing_info);
+    const { rows } = await Pool.query<types.adminInfo>(`
+        select a.id,a.email,a.name from  admins_tokens adt 
+        inner join admins a on a.id=$1 and a.id=adt.admin_id
+        where a.id=$1 and adt.token =$2
+        `, [user_id, token])
+    return rows[0];
 }
 
 async function checkEmail(email: string): Promise<boolean> {
