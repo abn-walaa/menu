@@ -3,8 +3,14 @@ import * as langs from "@modules/langs"
 import zodErrorHanlding from "@helpers/errorHandling";
 import * as zlangs from "@validation/langs";
 import { zValidator } from "@hono/zod-validator";
+import * as  types from "@InnerTypes/admins/module";
 
-const app = new Hono();
+const app = new Hono<{
+        Variables: {
+            user: types.adminInfo,
+            token: string
+        }
+    }>();
 
 
 app.post('/insert', zValidator("json",zlangs.insert , zodErrorHanlding),async (c) => {
