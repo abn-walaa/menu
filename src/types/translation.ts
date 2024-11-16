@@ -15,6 +15,6 @@ export type getByKeyId = (keyTextId: number) =>
 export type getByBoth = (keyTextId: number, langName: string) =>
     Promise<{ id: number, langName: string, contextId: number, text: string }[]>;
 
-export type deleteone = (keyTextId: number, langID: number) =>
+export type deleteone = (keyTextId: number) =>
     Promise<boolean>;
 

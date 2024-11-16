@@ -8,7 +8,7 @@ const app=new Hono();
 
 app.post('/insert', zValidator("json",zlangs.insert , zodErrorHanlding),async (c) => {
  
-        const { name} = await c.req.json();
+        const { name} = c.req.valid('json');
         const languages = await langs.insertOne(name);
         return c.json(languages, 200); 
     
