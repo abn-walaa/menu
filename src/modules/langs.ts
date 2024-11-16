@@ -8,8 +8,8 @@ export const insertOne: types.insert = async (name) => {
     if (!name) {
         throw new Error(ErrorHandles.mssing_info)
     }
-    const { rows } = await Pool.query<{ id: number }>(`INSERT INTO langs (name) VALUES ($1) RETURNING id`, [name]);
-    return { id: rows[0].id };
+    const { rows } = await Pool.query<{ id: number,name:string }>(`INSERT INTO langs (name) VALUES ($1) RETURNING id,name`, [name]);
+    return { id: rows[0].id ,name:rows[0].name};
 }
 
 export const getall: types.getall = async () => {

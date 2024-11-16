@@ -49,23 +49,18 @@ CREATE TABLE IF NOT EXISTS public.textkeys
 (
     id serial PRIMARY KEY,
 );
-CREATE TABLE IF NOT EXISTS public.translation
-(
+
+CREATE TABLE IF NOT EXISTS public.translation (
     id serial PRIMARY KEY,
     text text NOT NULL,
     lang_id integer NOT NULL,
     textkeys_id integer NOT NULL,
+    CONSTRAINT context_id_forign FOREIGN KEY (textkeys_id)
+        REFERENCES public.textkeys (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT lang_id_forign FOREIGN KEY (lang_id)
+        REFERENCES public.langs (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 );
-ALTER TABLE IF EXISTS public.translation
-    ADD CONSTRAINT context_id_forign FOREIGN KEY (textkey_id)
-    REFERENCES public.textkeys (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-ALTER TABLE IF EXISTS public.translation
-    ADD CONSTRAINT lang_id_forign FOREIGN KEY (lang_id)
-    REFERENCES public.langs (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
