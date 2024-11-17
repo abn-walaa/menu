@@ -24,3 +24,29 @@ export const plans = z.object({
     name: z.string().min(1),
     symbol: z.string(),
 })
+// Permission
+const actions = z.union([
+    z.literal("view"),
+    z.literal("update"),
+    z.literal("create"),
+    z.literal("delete")
+]);
+const resources = z.union([
+    z.literal("products"),
+    z.literal("orders")
+]);
+export const permission = z.object({
+    action: actions,
+    resourc: resources
+})
+// Role 
+export const roles = z.object({
+    name: z.string()
+})
+// Permission - Role
+
+export const permissionRole = z.object({
+    role_id: z.number().gt(0),
+    permission_id: z.number().gt(0)
+})
+

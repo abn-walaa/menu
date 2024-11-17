@@ -64,3 +64,13 @@ CREATE TABLE IF NOT EXISTS public.translation (
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS plans (
+    id SERIAL PRIMARY KEY,
+    name text NOT NULL,
+    symbol text NOT NULL,
+    time TIMESTAMP DEFAULT NOW(),
+    admin_id INTEGER NOT NULL  REFERENCES admins(id)
+);
+
+
