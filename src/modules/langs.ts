@@ -1,6 +1,8 @@
 import Pool from "@Pool";
 import * as types from "@InnerTypes/langs";
+
 import ErrorHandles from "@InnerTypes/error/error";
+
 
 
 export const insertOne: types.insert = async (name) => {

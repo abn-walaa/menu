@@ -7,6 +7,7 @@ import { zValidator } from "@hono/zod-validator";
 const app = new Hono();
 
 
+
 app.post('/insert', zValidator("json",zlangs.insert , zodErrorHanlding),async (c) => {
  
         const { name} = c.req.valid('json');

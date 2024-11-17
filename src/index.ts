@@ -6,7 +6,8 @@ import langs from "@routers/langs"
 import Admin from '@routers/admin/log'
 import { DatabaseError } from "pg"
 import adminRouter from '@routers/admin/main'
-const app = new Hono({
+
+const app = new Hono({});
 
 
 app.route('/admin', adminRouter)
@@ -19,11 +20,13 @@ app.onError((err, c) => {
   }
   console.error(err.stack,)
   return c.json({
-    status: "done",
+    status: "error",
     message: err.message,
     code: err instanceof HTTPException ? err.status : 400,
     cause: err.cause
-  },err instanceof HTTPException ? err.status : 400)
+
+  }, err instanceof HTTPException ? err.status : 400)
+
 
 })
 

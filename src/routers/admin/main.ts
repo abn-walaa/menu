@@ -4,6 +4,10 @@ import authAdmin from "@middleware/authAdmin";
 import * as  types from "@InnerTypes/admins/module";
 import { handlingUsers } from "./handlingUsers";
 import plans from "./plans";
+import { roles } from "./roles";
+import { permissions } from "./permissions";
+import { permissionsRole } from "./permissionsRole";
+
 
 const adminRouter = new Hono<{
     Variables: {
@@ -20,4 +24,9 @@ adminRouter.get("/info", (c) => c.json(c.var.user));
 adminRouter.route("/users", handlingUsers);
 // plans
 adminRouter.route("/plans", plans);
+//
+adminRouter.route("/role", roles);
+// 
+adminRouter.route("/permissions", permissions);
+adminRouter.route("/role-permssions", permissionsRole);
 export default adminRouter
