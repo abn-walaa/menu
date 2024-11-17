@@ -7,6 +7,7 @@ import plans from "./plans";
 import { roles } from "./roles";
 import { permissions } from "./permissions";
 import { permissionsRole } from "./permissionsRole";
+import { langs } from "./langs";
 
 
 const adminRouter = new Hono<{
@@ -29,4 +30,5 @@ adminRouter.route("/role", roles);
 // 
 adminRouter.route("/permissions", permissions);
 adminRouter.route("/role-permssions", permissionsRole);
+adminRouter.route("/langs", langs);
 export default adminRouter
