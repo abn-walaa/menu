@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS public.langs(
 
 CREATE TABLE IF NOT EXISTS public.textkeys
 (
-    id serial PRIMARY KEY,
+    id serial PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS public.translation (
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS plans (
 
 CREATE TABLE IF NOT EXISTS public.textkeys
 (
-    id serial PRIMARY KEY,
+    id serial PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS public.translation (
@@ -123,4 +123,7 @@ ALTER TABLE roles
 ADD CONSTRAINT name UNIQUE (name);
 ALTER TABLE plans
 ADD CONSTRAINT name UNIQUE (symbol);
+
+ALTER TABLE langs
+ADD COLUMN admin  INTEGER NOT NULL REFERENCES admins (id);
 
