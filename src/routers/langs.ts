@@ -6,9 +6,12 @@ import { zValidator } from "@hono/zod-validator";
 
 const app = new Hono();
 
-app.post('/insert', zValidator("json", zlangs.insert, zodErrorHanlding), async (c) => {
 
-        const { name } = await c.req.json();
+
+app.post('/insert', zValidator("json",zlangs.insert , zodErrorHanlding),async (c) => {
+ 
+        const { name} = c.req.valid('json');
+
         const languages = await langs.insertOne(name);
         return c.json(languages, 200);
 
@@ -18,7 +21,6 @@ app.post('/insert', zValidator("json", zlangs.insert, zodErrorHanlding), async (
 app.get('/getall', async (c) => {
         const languages = await langs.getall();
         return c.json(languages, 200);
-
 });
 
 export default app;

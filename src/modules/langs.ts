@@ -1,6 +1,8 @@
 import Pool from "@Pool";
 import * as types from "@InnerTypes/langs";
-import * as ErrorHandles from "@InnerTypes/error/error";
+
+import ErrorHandles from "@InnerTypes/error/error";
+
 
 
 export const insertOne: types.insert = async (name) => {
@@ -13,6 +15,6 @@ export const insertOne: types.insert = async (name) => {
 }
 
 export const getall: types.getall = async () => {
-    const { rows } = await Pool.query<{ id: number, name: string }>(`SELECT * FROM langs`);
+    const { rows } = await Pool.query<{ id: number, name: string }>(`SELECT id,name FROM langs`);
     return rows
 }
