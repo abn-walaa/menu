@@ -96,3 +96,31 @@ CREATE TABLE IF NOT EXISTS plans (
 );
 
 
+
+CREATE TABLE IF NOT EXISTS permissionses (
+    id SERIAL PRIMARY KEY,
+    action text NOT NULL,
+    resource text NOT NULL,
+    time TIMESTAMP DEFAULT NOW(),
+    admin_id INTEGER NOT NULL  REFERENCES admins(id)
+);
+
+CREATE TABLE IF NOT EXISTS roles (
+    id SERIAL PRIMARY KEY,
+    name text NOT NULL,
+    time TIMESTAMP DEFAULT NOW(),
+    admin_id INTEGER NOT NULL  REFERENCES admins(id)
+);
+
+CREATE TABLE IF NOT EXISTS role_permissions (
+    id SERIAL PRIMARY KEY, 
+    admin_id INTEGER NOT NULL  REFERENCES admins(id),
+    role_id INTEGER NOT NULL  REFERENCES roles(id),
+    permission_id INTEGER NOT NULL  REFERENCES permissionses(id)
+);
+
+ALTER TABLE roles
+ADD CONSTRAINT name UNIQUE (name);
+ALTER TABLE plans
+ADD CONSTRAINT name UNIQUE (symbol);
+
