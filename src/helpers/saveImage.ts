@@ -1,5 +1,5 @@
 import {join} from "path";
-import * as sharp from "sharp";
+import  sharp from "sharp";
 
 // Define the `save` function
 export const save=async function (filename: string, img: Buffer): Promise<void> {

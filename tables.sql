@@ -132,13 +132,11 @@ CREATE TABLE IF NOT EXISTS restaurants (
     id SERIAL PRIMARY KEY,
     logo text NOT NULL,
     colors text[] NOT NULL,
-    can_order boolean NOT NULL DEFAULT false,
     expire_date date ,
     time TIMESTAMP DEFAULT NOW(),
     name_symbol text NOT NULL,
     admin_id INTEGER NOT NULL  REFERENCES admins(id),
     user_id INTEGER NOT NULL  REFERENCES users(id),
-    plan_id INTEGER NOT NULL  REFERENCES plans(id)
 );
 
 CREATE TABLE IF NOT EXISTS branches (

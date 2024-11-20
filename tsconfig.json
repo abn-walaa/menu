@@ -3,6 +3,7 @@
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
+    "esModuleInterop": true,
     "paths": {
       "@Pool": [
         "./src/db/db.ts"
@@ -24,10 +25,7 @@
       ],
       "@middleware/*": [
         "./src/middleware/*"
-      ],
-      "@controller/*": [
-        "./src/controller/*"
-      ],
+      ]
     }
   }
 }
