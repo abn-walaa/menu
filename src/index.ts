@@ -1,7 +1,7 @@
 import { Hono, } from 'hono'
 import { HTTPException, } from 'hono/http-exception'
 import { showRoutes, } from 'hono/dev'
-import langs from "@routers/langs"
+import langs from "@routers/admin/langs"
 
 import Admin from '@routers/admin/log'
 import { DatabaseError } from "pg"
@@ -24,9 +24,7 @@ app.onError((err, c) => {
     message: err.message,
     code: err instanceof HTTPException ? err.status : 400,
     cause: err.cause
-
   }, err instanceof HTTPException ? err.status : 400)
-
 
 })
 
@@ -36,9 +34,6 @@ showRoutes(app, {
 
 
 export default {
-
   fetch: app.fetch,
-
   port: 3000
-
 }

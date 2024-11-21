@@ -4,12 +4,12 @@ CREATE TABLE IF NOT EXISTS  admins(
     name  text  NOT NULL,
     password  text  NOT NULL,
     email  text unique  NOT NULL,
-    time TIMESTAMP DEFAULT NOW()
+    time TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE IF NOT EXISTS admins_tokens (
     id SERIAL PRIMARY KEY,
     token text NOT NULL,
-    time TIMESTAMP DEFAULT NOW() ,
+    time TIMESTAMPTZ DEFAULT NOW() ,
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
 
@@ -19,12 +19,12 @@ CREATE  TABLE IF NOT EXISTS users (
     password  text  NOT NULL,
     email  text unique  NOT NULL,
     admin_id INTEGER NOT NULL  REFERENCES admins(id),
-    time TIMESTAMP DEFAULT NOW()
+    time TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE IF NOT EXISTS users_tokens (
     id SERIAL PRIMARY KEY,
     token text NOT NULL,
-    time TIMESTAMP DEFAULT NOW(),
+    time TIMESTAMPTZ DEFAULT NOW(),
     user_id INTEGER NOT NULL  REFERENCES users(id)
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS plans (
     id SERIAL PRIMARY KEY,
     name text NOT NULL,
     symbol text NOT NULL,
-    time TIMESTAMP DEFAULT NOW(),
+    time TIMESTAMPTZ DEFAULT NOW(),
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS plans (
     id SERIAL PRIMARY KEY,
     name text NOT NULL,
     symbol text NOT NULL,
-    time TIMESTAMP DEFAULT NOW(),
+    time TIMESTAMPTZ DEFAULT NOW(),
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
 
@@ -101,14 +101,14 @@ CREATE TABLE IF NOT EXISTS permissionses (
     id SERIAL PRIMARY KEY,
     action text NOT NULL,
     resource text NOT NULL,
-    time TIMESTAMP DEFAULT NOW(),
+    time TIMESTAMPTZ DEFAULT NOW(),
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
 
 CREATE TABLE IF NOT EXISTS roles (
     id SERIAL PRIMARY KEY,
     name text NOT NULL,
-    time TIMESTAMP DEFAULT NOW(),
+    time TIMESTAMPTZ DEFAULT NOW(),
     admin_id INTEGER NOT NULL  REFERENCES admins(id)
 );
 
@@ -118,6 +118,10 @@ CREATE TABLE IF NOT EXISTS role_permissions (
     role_id INTEGER NOT NULL  REFERENCES roles(id),
     permission_id INTEGER NOT NULL  REFERENCES permissionses(id)
 );
+
+
+
+
 
 ALTER TABLE roles
 ADD CONSTRAINT name UNIQUE (name);
