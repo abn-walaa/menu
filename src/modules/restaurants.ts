@@ -13,8 +13,13 @@ export const insert: types.insert = async (name, logo, colors, expire_date,
     if ((colors.length == 0) || !expire_date || !name_symbol || !admin_id || !user_id) {
         throw new Error(ErrorHandles.mssing_info);
     }
+
+    if ((colors.length == 0) || !expire_date || !name_symbol || !admin_id || !user_id) {
+        throw new Error(ErrorHandles.mssing_info);
+    }
     const imgData = {
         fileName: generateFileName(),
+        buffer: await logo.arrayBuffer()
         buffer: await logo.arrayBuffer()
     };
     const client = await Pool.connect();
@@ -42,9 +47,9 @@ export const insert: types.insert = async (name, logo, colors, expire_date,
     }
 }
 
-export const getone: types.getone = async (restaurant_id, langName) => {
+export const getone: types.getone = async (restaurant_id, lang_id) => {
 
-    if (!restaurant_id || !langName) {
+    if (!restaurant_id || !lang_id) {
         throw new Error(ErrorHandles.mssing_info);
     }
     let { rows } = await Pool.query<types.OutputGetOne>(`SELECT r.id,tr.text as name,r.logo,r.colors,r.expire_date,r.name_symbol,r.time,r.admin_id,r.user_id
@@ -54,6 +59,8 @@ export const getone: types.getone = async (restaurant_id, langName) => {
             inner join textkeys te ON te.id = br.name_id
             inner join translation tr ON tr.lang_id = l.id and tr.textkey_id=te.id
             where r.id=$1 `, [restaurant_id, lang_id])
+    return rows[0];
+            where r.id = $1`, [restaurant_id, lang_id])
     return rows[0];
 }
 
