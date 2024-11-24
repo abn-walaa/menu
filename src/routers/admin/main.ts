@@ -8,7 +8,7 @@ import { roles } from "./roles";
 import { permissions } from "./permissions";
 import { permissionsRole } from "./permissionsRole";
 import { langs } from "./langs";
-import {Restaurants} from "./restaurants";
+import { Restaurants } from "./restaurants";
 
 
 const adminRouter = new Hono<{
