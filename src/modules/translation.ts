@@ -7,14 +7,15 @@ import * as langs from "@modules/langs";
 //texts is  array of object of text and langName as input 
 export const insert: types.insert = async (texts) => {
 
+    
     let language = await langs.getall();
+    let lang_id:number[]=[]
     language.forEach((e) => {
-        const matchingText = texts.some((t) => t.langName === e.name);
+        const matchingText = texts.some((t) => t.langName === e.name ,lang_id.push(e.id));
         if (!matchingText) {
             throw new Error( ErrorHandles.mssing_info);
         }
     })
-
     const client = await Pool.connect();
 
     try {
@@ -23,8 +24,8 @@ export const insert: types.insert = async (texts) => {
         const keyId = rows[0].id;
         for (let i = 0; i < language.length; i++) {
             await client.query(
-                'INSERT INTO translations (text, lang_id,textkey_id) VALUES ($1, $2,$3)',
-                [texts[i].text, texts[i].langName, keyId]
+                'INSERT INTO translation (text,lang_id,textkey_id) VALUES ($1,$2,$3)',
+                [texts[i].text,lang_id[i], keyId]
             );
         }
         await client.query('COMMIT');
