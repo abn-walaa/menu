@@ -1,3 +1,4 @@
+import ErrorHanlding from "@InnerTypes/error/error";
 import { symbol, z } from "zod";
 // log Router
 export const logup = z.object({
@@ -49,4 +50,3 @@ export const permissionRole = z.object({
     role_id: z.number().gt(0),
     permission_id: z.number().gt(0)
 })
-

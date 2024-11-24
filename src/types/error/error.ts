@@ -5,6 +5,7 @@ export enum ErrorHanlding {
     "email_not_found" = "Email not found !",
     "dont_have_access" = "you don't have access !",
     "not_found" = "not found !",
+    "img_required" = "img as file is required",
     "the_action_and_resc_used" = "the action and resource are insered !",
     "the_role_permission" = "the role and permission is used ",
     "invalid_password" = "invalid password !",
