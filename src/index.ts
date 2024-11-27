@@ -1,12 +1,7 @@
 import { Hono, } from 'hono'
 import { HTTPException, } from 'hono/http-exception'
-import { showRoutes, } from 'hono/dev'
+import { showRoutes } from 'hono/dev'
 
-
-import {langs} from "@routers/admin/langs"
-import { Restaurants } from '@routers/admin/restaurants'
-
-import Admin from '@routers/admin/log'
 import { DatabaseError } from "pg"
 import adminRouter from '@routers/admin/main'
 import { existsSync, mkdirSync } from 'fs';
@@ -26,7 +21,7 @@ if (!existsSync(imgsFolderPath)) {
 }
 
 app.route('/admin', adminRouter);
-app.route('/langs', langs);
+
 
 
 app.use('/public/imgs/*', serveStatic({ root: imgsFolderPath }));

@@ -1,7 +1,7 @@
 import Pool from "@Pool";
 import * as types from "@InnerTypes/restaurants";
 import ErrorHandles from "@InnerTypes/error/error";
-import { insert as translation } from "@modules/translation";
+import { insert2 as translation } from "@modules/translation";
 import { save } from "@helpers/saveImage";
 import { generateFileName } from "@helpers/generateImgName";
 import { date } from "zod";
@@ -9,21 +9,18 @@ import { date } from "zod";
 export const insert: types.insert = async (name, logo, colors, expire_date,
     name_symbol, admin_id, user_id) => {
 
+        
+            if ((colors.length == 0) || !expire_date || !name_symbol || !admin_id || !user_id) {
+                throw new Error(ErrorHandles.mssing_info);
+            }
     const imgData = {
         fileName: generateFileName(),
-        buffer: Buffer.from(await logo.arrayBuffer())
+        buffer: await logo.arrayBuffer()
     };
-
-
-    if ((colors.length == 0) || !expire_date || !name_symbol || !admin_id || !user_id) {
-        throw new Error(ErrorHandles.mssing_info);
-    }
     const client = await Pool.connect();
-
-
-    const textkey_id = await translation(name);
     try {
         await client.query('BEGIN');
+        const textkey_id = await translation(name,client);
         const { rows } = await client.query<{ id: number }>(`INSERT INTO restaurants (logo, colors, expire_date, name_symbol, 
                 admin_id, user_id)VALUES($1,$2,$3,$4,$5,$6) RETURNING id`, [imgData.fileName, colors, expire_date, name_symbol, admin_id, user_id]);
 
@@ -35,7 +32,7 @@ export const insert: types.insert = async (name, logo, colors, expire_date,
         return {
             id: rows[0].id, name, colors,
             expire_date, name_symbol,
-            user_id, logoName: imgData.fileName
+            user_id, logo: imgData.fileName
         };
     } catch (error) {
         await client.query('ROLLBACK');

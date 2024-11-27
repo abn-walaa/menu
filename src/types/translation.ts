@@ -1,9 +1,14 @@
+import { PoolClient } from "pg";
+
 type InsertObject = {
     text: string;
     langName: string;
 };
 
 export type insert = (items: InsertObject[]) =>
+    Promise<{ id: number }>;
+
+export type insert2 = (items: InsertObject[],client:PoolClient) =>
     Promise<{ id: number }>;
 
 export type getbylangname = (langName: string) =>

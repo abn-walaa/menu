@@ -26,8 +26,8 @@ app.post('/insert', zValidator("form", zRestaurant.insert, zodErrorHanlding), as
 
 })
 
-app.post('/getone',zValidator("json",zRestaurant.getOne,zodErrorHanlding),async(c)=>{
-    const {restaurant_id,langName}=c.req.valid("json");
+app.get('/:restaurant_id/:langName',zValidator("param",zRestaurant.getOne,zodErrorHanlding),async(c)=>{
+    const {restaurant_id,langName}=c.req.valid("param");
     const restaurant = await Restaurants.getone(restaurant_id,langName);
     return c.json(restaurant,200)
 })
