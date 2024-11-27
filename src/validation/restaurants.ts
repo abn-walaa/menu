@@ -44,6 +44,13 @@ export const insert = z.object({
 })
 
 export const getOne = z.object({
-  restaurant_id: z.number(),
+  restaurant_id:  z
+  .string()
+  .transform((val) => {
+      const parsed = JSON.parse(val);
+      if (Number.isInteger(parsed)) {
+        return parsed;
+      }}),
+
   langName: z.string(),
 });

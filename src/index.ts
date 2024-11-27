@@ -24,7 +24,7 @@ if (!existsSync(imgsFolderPath)) {
 }
 
 app.route('/admin', adminRouter);
-app.route('/langs', langs);
+
 
 
 app.use('/public/imgs/*', serveStatic({ root: imgsFolderPath }));
