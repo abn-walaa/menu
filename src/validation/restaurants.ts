@@ -1,5 +1,6 @@
 import { z } from "zod";
 import {ErrorHanlding} from "@InnerTypes/error/error"
+import {numericString} from "@helpers/zodhelper"
 export const insert = z.object({
   name: z
   .string()
@@ -31,26 +32,10 @@ export const insert = z.object({
 ,
     expire_date: z.string(),
     name_symbol: z.string(),
-    user_id: z.string().transform(e=>{
-      const parsed = JSON.parse(e)
-      if (typeof parsed === 'number'){
-        return parsed;
-    }else{
-      throw new Error(ErrorHanlding.must_be_number);
-    }
-  }
-  )
-  ,
+    user_id: numericString(z.number()),
 })
 
-export const getOne = z.object({
-  restaurant_id:  z
-  .string()
-  .transform((val) => {
-      const parsed = JSON.parse(val);
-      if (Number.isInteger(parsed)) {
-        return parsed;
-      }}),
 
-  langName: z.string(),
+export const getOne = z.object({
+  lang_id: numericString(z.number())
 });

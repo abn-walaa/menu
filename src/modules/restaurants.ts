@@ -42,18 +42,18 @@ export const insert: types.insert = async (name, logo, colors, expire_date,
     }
 }
 
-export const getone:types.getone=async(restaurant_id,langName)=>{
+export const getone:types.getone=async(restaurant_id,lang_id)=>{
     
-    if(!restaurant_id||!langName){
+    if(!restaurant_id||!lang_id){
         throw new Error(ErrorHandles.mssing_info);
     }
     let {rows}=await Pool.query<types.OutputGetOne>(`SELECT r.id,tr.text as name,r.logo,r.colors,r.expire_date,r.name_symbol,r.time,r.admin_id,r.user_id
             from restaurants r 
             inner join branches br on br.restaurants_id = r.id
-            inner join langs l on l.name=$2    
+            inner join langs l on l.id=$2    
             inner join textkeys te ON te.id = br.name_id
             inner join translation tr ON tr.lang_id = l.id and tr.textkey_id=te.id
-            where r.id=$1 `,[restaurant_id,langName])
+            where r.id=$1 `,[restaurant_id,lang_id])
             return rows[0];
 }
 
