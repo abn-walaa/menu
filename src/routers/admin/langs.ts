@@ -23,7 +23,7 @@ app.post('/insert', zValidator("json", zlangs.insert, zodErrorHanlding), async (
 })
 
 
-app.get('/getall', async (c) => {
+app.get('/', async (c) => {
         const languages = await langs.getall();
         return c.json(languages, 200);
 });
