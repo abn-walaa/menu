@@ -8,7 +8,7 @@ type InsertObject = {
 export type insert = (items: InsertObject[]) =>
     Promise<{ id: number }>;
 
-export type insert2 = (items: InsertObject[],client:PoolClient) =>
+export type insert2 = (items: InsertObject[], client: PoolClient) =>
     Promise<{ id: number }>;
 
 export type getbylangname = (langName: string) =>

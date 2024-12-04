@@ -150,3 +150,25 @@ CREATE TABLE IF NOT EXISTS branches (
     user_id INTEGER NOT NULL  REFERENCES users(id),
     restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id),
 );
+--  categorys
+
+CREATE TABLE IF NOT EXISTS category(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL  REFERENCES users(id),
+    restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id),
+    imgs text NOT NULL,
+    context_id INTEGER NOT NULL  REFERENCES textkeys(id)
+)
+
+-- 
+CREATE TABLE IF NOT EXISTS products(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL  REFERENCES users(id),
+    restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id),
+    context_id INTEGER NOT NULL  REFERENCES textkeys(id),
+    category_id INTEGER   REFERENCES category(id),
+    price INTEGER NOT NULL ,
+    dicount integer NOT NULL,
+    imgs text[] NOT NULL,
+
+)

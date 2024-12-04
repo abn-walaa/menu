@@ -60,6 +60,6 @@ export const getAll: types.getAll = async () => {
         inner join roles r on r.id=rp.role_id
         inner join permissionses p on p.id=rp.permission_id
         `)
-
     return rows;
 }
+
