@@ -38,6 +38,29 @@ export const insert: types.insert = async (texts) => {
     }
 }
 
+export const insert2: types.insert2 = async (texts,client) => {
+
+    
+    let language = await langs.getall();
+    let lang_id:number[]=[]
+    language.forEach((e) => {
+        const matchingText = texts.some((t) => t.langName === e.name ,lang_id.push(e.id));
+        if (!matchingText) {
+            throw new Error( ErrorHandles.mssing_info);
+        }
+    })
+    
+        const { rows } = await client.query<{ id: number }>(`INSERT INTO textkeys DEFAULT VALUES RETURNING id`);
+        const keyId = rows[0].id;
+        for (let i = 0; i < language.length; i++) {
+            await client.query(
+                'INSERT INTO translation (text,lang_id,textkey_id) VALUES ($1,$2,$3)',
+                [texts[i].text,lang_id[i], keyId]
+            );
+        }
+        return { id: keyId };
+}
+
 export const getByLangName: types.getbylangname = async (langName) => {
     if (langName) {
         throw new Error( ErrorHandles.mssing_info);

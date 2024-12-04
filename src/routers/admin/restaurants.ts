@@ -26,9 +26,10 @@ app.post('/insert', zValidator("form", zRestaurant.insert, zodErrorHanlding), as
 
 })
 
-app.post('/getone',zValidator("json",zRestaurant.getOne,zodErrorHanlding),async(c)=>{
-    const {restaurant_id,langName}=c.req.valid("json");
-    const restaurant = await Restaurants.getone(restaurant_id,langName);
+app.get('/:id{[0-9]+}',zValidator("query",zRestaurant.getOne,zodErrorHanlding),async(c)=>{
+    const {id}=c.req.param();
+    let {lang_id} = c.req.valid('query');
+    const restaurant = await Restaurants.getone(Number(id),lang_id);
     return c.json(restaurant,200)
 })
 
