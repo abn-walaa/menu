@@ -18,10 +18,10 @@ const app =new Hono<{
 
 app.post('/insert', zValidator("form", zRestaurant.insert, zodErrorHanlding), async (c) => {
     const { name, logo, colors, expire_date,
-        name_symbol, user_id} = c.req.valid('form');
+        name_symbol, user_id,supported_langs} = c.req.valid('form');
         
     const restaurant = await Restaurants.insert(name,logo, colors, expire_date,
-        name_symbol,c.var.user.id, user_id);
+        name_symbol,c.var.user.id, user_id,supported_langs);
     return c.json(restaurant, 200);
 
 })
