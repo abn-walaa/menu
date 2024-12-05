@@ -8,7 +8,8 @@ import { roles } from "./roles";
 import { permissions } from "./permissions";
 import { permissionsRole } from "./permissionsRole";
 import { langs } from "./langs";
-import {Restaurants} from "./restaurants";
+import { Restaurants } from "./restaurants";
+import { users } from "./users";
 
 
 const adminRouter = new Hono<{
@@ -30,7 +31,12 @@ adminRouter.route("/plans", plans);
 adminRouter.route("/role", roles);
 // 
 adminRouter.route("/permissions", permissions);
+// 
 adminRouter.route("/role-permssions", permissionsRole);
+// 
 adminRouter.route("/langs", langs);
+// 
 adminRouter.route("/restaurants", Restaurants);
+
+adminRouter.route("/users", users);
 export default adminRouter

@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS public.translation (
     id serial PRIMARY KEY,
     text text NOT NULL,
     lang_id integer NOT NULL,
-    textkeys_id integer NOT NULL,
+    textkey_id integer NOT NULL,
     CONSTRAINT context_id_forign FOREIGN KEY (textkeys_id)
         REFERENCES public.textkeys (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -129,7 +129,7 @@ ALTER TABLE plans
 ADD CONSTRAINT name UNIQUE (symbol);
 
 ALTER TABLE langs
-ADD COLUMN admin  INTEGER NOT NULL REFERENCES admins (id);
+ADD COLUMN admin_id  INTEGER NOT NULL REFERENCES admins (id);
 
 
 CREATE TABLE IF NOT EXISTS restaurants (
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
     time TIMESTAMP DEFAULT NOW(),
     name_symbol text NOT NULL,
     admin_id INTEGER NOT NULL  REFERENCES admins(id),
-    user_id INTEGER NOT NULL  REFERENCES users(id),
+    user_id INTEGER NOT NULL  REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS branches (
@@ -148,5 +148,12 @@ CREATE TABLE IF NOT EXISTS branches (
     is_main boolean NOT NULL DEFAULT false,
     name_id INTEGER NOT NULL  REFERENCES textkeys(id),
     user_id INTEGER NOT NULL  REFERENCES users(id),
-    restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id),
+    restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id)
 );
+
+CREATE TABLE IF NOT EXISTS supported_langs(
+    id SERIAL PRIMARY KEY,
+    lang_id INTEGER NOT NULL  REFERENCES langs(id),
+    restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id)
+);
+
