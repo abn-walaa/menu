@@ -4,9 +4,13 @@ import { showRoutes } from 'hono/dev'
 
 import { DatabaseError } from "pg"
 import adminRouter from '@routers/admin/main'
+import productRouter from '@routers/branch/product'
 import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
-import { serveStatic } from 'hono/bun'
+import { serveStatic } from 'hono/bun';
+import branchRouter from '@routers/users/main'
+import restaurantRouter from '@routers/restaurant/main'
+
 const app = new Hono({});
 
 const publicFolderPath = join(__dirname, '..', 'public');
@@ -21,12 +25,17 @@ if (!existsSync(imgsFolderPath)) {
 }
 
 app.route('/admin', adminRouter);
+app.route('/branch', branchRouter);
+app.route('/product', productRouter);
+app.route('/restrant/:restrant_id{[0-9]+}', restaurantRouter);
 
 
 
-app.use('/public/imgs/*', serveStatic({root:'/public/imgs', rewriteRequestPath: p => {
-  return p.replace(/^\/public\/imgs/, '');
-} }));
+app.use('/public/imgs/*', serveStatic({
+  root: '/public/imgs', rewriteRequestPath: p => {
+    return p.replace(/^\/public\/imgs/, '');
+  }
+}));
 
 
 
@@ -46,9 +55,6 @@ app.onError((err, c) => {
 
 })
 
-showRoutes(app, {
-  verbose: true,
-})
 
 
 export default {

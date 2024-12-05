@@ -27,7 +27,7 @@ export const genToken: types.genToken = async (user_id) => {
         exp: (Math.floor(Date.now() / 1000) + 60 * 60 * 24 * (process.env.JWT_EXPIRE ? Number(process.env.JWT_EXPIRE) : 30)),
         user_id
     }, process.env.JWT_KEY ?? "test")
-    await Pool.query(`insert into users_tokens(token,admin_id) values($1,$2)`, [token, user_id])
+    await Pool.query(`insert into users_tokens(token,user_id) values($1,$2)`, [token, user_id])
     return token
 }
 
@@ -48,7 +48,7 @@ export const findByToken: types.findByToken = async (user_id, token) => {
     if (!user_id || !token.trim()) throw new Error(ErrorHanlding.mssing_info);
     const { rows } = await Pool.query<types.userInfo>(`
         select a.id,a.email,a.name from  users_tokens adt 
-        inner join users a on a.id=$1 and a.id=adt.admin_id
+        inner join users a on a.id=$1 and a.id=adt.user_id
         where a.id=$1 and adt.token =$2
         `, [user_id, token])
     return rows[0];

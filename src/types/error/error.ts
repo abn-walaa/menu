@@ -9,9 +9,10 @@ export enum ErrorHanlding {
     "the_action_and_resc_used" = "the action and resource are insered !",
     "the_role_permission" = "the role and permission is used ",
     "invalid_password" = "invalid password !",
-    "must_be_array"="the input must be an array ",
-    "string"="must be a string ",
-    "must_be_number"="input must be a number ",
+    "must_be_array" = "the input must be an array ",
+    "string" = "must be a string ",
+    "must_be_number" = "input must be a number ",
+    "from_is_wrong" = "Error with fromating the input data !",
 }
 
 export default ErrorHanlding;
