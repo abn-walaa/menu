@@ -1,6 +1,6 @@
 type InsertObject = {
     text: string;
-    langName: string;
+    lang_id: number;
 };
 export type OutputGetOne={
     id: number, name: string, colors: string[],logo:string,
@@ -12,7 +12,7 @@ export type OutputGetOne={
 
 export type insert = (name:  InsertObject[], logo: File, colors: string[],
     expire_date: string, name_symbol: string,
-    admin_id: number, user_id: number) =>
+    admin_id: number, user_id: number,supported_langs:number[]) =>
     Promise<{
         id: number, name: InsertObject[], colors: string[], 
         expire_date: string, name_symbol: string,

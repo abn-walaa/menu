@@ -24,8 +24,8 @@ app.route('/admin', adminRouter);
 
 
 
-app.use('/public/imgs/*', serveStatic({ rewriteRequestPath: p => {
-  return p.replace(/^\/static/, '')
+app.use('/public/imgs/*', serveStatic({root:'/public/imgs', rewriteRequestPath: p => {
+  return p.replace(/^\/public\/imgs/, '');
 } }));
 
 

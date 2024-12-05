@@ -4,22 +4,19 @@ import ErrorHandles from "@InnerTypes/error/error";
 import * as langs from "@modules/langs";
 
 
-//texts is  array of object of text and langName as input 
-export const insert: types.insert = async (texts) => {
+export const insert: types.insert = async (texts,client) => {
 
     
     let language = await langs.getall();
     let lang_id:number[]=[]
     language.forEach((e) => {
-        const matchingText = texts.some((t) => t.langName === e.name ,lang_id.push(e.id));
+        const matchingText = texts.some((t) => t.lang_id === e.id ,lang_id.push(e.id));
+        console.log(matchingText)
         if (!matchingText) {
             throw new Error( ErrorHandles.mssing_info);
         }
     })
-    const client = await Pool.connect();
-
-    try {
-        await client.query('BEGIN');
+    
         const { rows } = await client.query<{ id: number }>(`INSERT INTO textkeys DEFAULT VALUES RETURNING id`);
         const keyId = rows[0].id;
         for (let i = 0; i < language.length; i++) {
@@ -28,15 +25,9 @@ export const insert: types.insert = async (texts) => {
                 [texts[i].text,lang_id[i], keyId]
             );
         }
-        await client.query('COMMIT');
         return { id: keyId };
-    } catch (error) {
-        await client.query('ROLLBACK');
-        throw error;
-    } finally {
-        client.release();
-    }
 }
+
 
 export const insert2: types.insert2 = async (texts,client) => {
 
@@ -44,7 +35,7 @@ export const insert2: types.insert2 = async (texts,client) => {
     let language = await langs.getall();
     let lang_id:number[]=[]
     language.forEach((e) => {
-        const matchingText = texts.some((t) => t.langName === e.name ,lang_id.push(e.id));
+        const matchingText = texts.some((t) => t.lang_id === e.id ,lang_id.push(e.id));
         if (!matchingText) {
             throw new Error( ErrorHandles.mssing_info);
         }
