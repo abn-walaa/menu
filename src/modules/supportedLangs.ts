@@ -30,7 +30,16 @@ export const insert_client: types.insert_clinet = async (langId, restaurantsId, 
     return rows;
 };
 export const getbyid: types.getbyid = async (id) => {
-    const { rows } = await Pool.query<{ id: number, langId: number, restaurantsId: number }>(`SELECT id,lang_id,restaurants_id FROM supported_langs where id=$1`, [id]);
+    const { rows } = await Pool.query<{ id: number, lang_id: number, restaurantsId: number }>(`SELECT 
+        id,lang_id,restaurants_id
+        FROM supported_langs where id=$1`, [id]);
     return rows
+}
+export const getbyRestaurant: types.getbyRestaurant = async (id) => {
+    const { rows } = await Pool.query<{ id: number, lang_id: number, restaurantsId: number }>(`SELECT 
+        id,lang_id,restaurants_id
+        FROM supported_langs where restaurants_id=$1`, [id]);
+    if (rows.length === 0) throw new Error(ErrorHandles.restaurant_not_found);
+    return rows.map(e => e.lang_id)
 }
 

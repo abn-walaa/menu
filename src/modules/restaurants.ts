@@ -28,7 +28,7 @@ export const insert: types.insert = async (name, logo, colors, expire_date,
         const textkey_id = await translation.insert2(name, client, supported_langs);
 
         await client.query(`INSERT INTO branches (is_main,name_id,user_id,restaurants_id)
-                    VALUES ($1,$2,$3,$4)`, [true, textkey_id.id, user_id, restaurant_id[0].id]);
+                    VALUES ($1,$2,$3,$4)`, [true, textkey_id, user_id, restaurant_id[0].id]);
 
         await save(imgData.fileName, imgData.buffer);
         await client.query('COMMIT');
@@ -49,7 +49,8 @@ export const getone: types.getone = async (restaurant_id, lang_id) => {
     if (!restaurant_id || !lang_id) {
         throw new Error(ErrorHandles.mssing_info);
     }
-    let { rows } = await Pool.query<types.OutputGetOne>(`SELECT r.id,tr.text as name,r.logo,r.colors,r.expire_date,r.name_symbol,r.time,r.admin_id,r.user_id
+    let { rows } = await Pool.query<types.OutputGetOne>(`
+            SELECT r.id,tr.text as name,r.logo,r.colors,r.expire_date,r.name_symbol,r.time,r.admin_id,r.user_id
             from restaurants r 
             inner join branches br on br.restaurants_id = r.id   
             inner join textkeys te ON te.id = br.name_id
@@ -67,6 +68,16 @@ export const getOneData: types.getOneData = async (restaurant_id) => {
     return rows[0];
 }
 
-
+export const getUserRretaurants: types.getUserRretaurants = async (user_id) => {
+    if (!user_id) {
+        throw new Error(ErrorHandles.mssing_info);
+    }
+    const { rows } = await Pool.query<types.OutputGetR>(`
+        SELECT r.id,r.logo,r.colors,r.expire_date,r.name_symbol,r.time,r.user_id,r.is_active
+            from restaurants r 
+            where r.user_id=$1 
+        `, [user_id])
+    return rows;
+}
 
 

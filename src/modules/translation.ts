@@ -25,22 +25,20 @@ export const insert: types.insert = async (texts, client) => {
             [texts[i].text, lang_id[i], keyId]
         );
     }
-    return { id: keyId };
+    return keyId;
 }
 
 
-export const insert2: types.insert2 = async (texts, client) => {
+export const insert2: types.insert2 = async (texts, client, language) => {
 
 
-    let language = await langs.getall();
 
-    let lang_id: number[] = [];
-    if (texts.length < language.length || texts.length > language.length) throw new Error(ErrorHandles.mssing_info);
-
+    if (texts.length < language.length) throw new Error(ErrorHandles.mssing_info);
+    if (texts.length > language.length) throw new Error(ErrorHandles.to_many_inputs);
     texts.forEach((e) => {
         const matchingText = language.some((l, index) => {
-            if (e.lang_id === l.id) {
-                language[index].id = -1;
+            if (e.lang_id === l) {
+                language[index] = -1;
                 return true;
             }
         });
@@ -62,7 +60,7 @@ export const insert2: types.insert2 = async (texts, client) => {
         'INSERT INTO translation (text,lang_id,textkey_id) VALUES ' + query.join(","),
         values
     );
-    return { id: keyId };
+    return keyId;
 }
 
 export const getByLangName: types.getbylangname = async (langName) => {

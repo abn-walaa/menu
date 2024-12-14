@@ -131,6 +131,11 @@ ADD CONSTRAINT name UNIQUE (symbol);
 ALTER TABLE langs
 ADD COLUMN admin_id  INTEGER NOT NULL REFERENCES admins (id);
 
+ALTER TABLE langs
+ADD COLUMN symbol text not null;
+
+
+
 
 CREATE TABLE IF NOT EXISTS restaurants (
     id SERIAL PRIMARY KEY,
@@ -142,7 +147,8 @@ CREATE TABLE IF NOT EXISTS restaurants (
     admin_id INTEGER NOT NULL  REFERENCES admins(id),
     user_id INTEGER NOT NULL  REFERENCES users(id)
 );
-
+ALTER TABLE restaurants
+ADD COLUMN is_active boolean not null DEFAULT true;
 CREATE TABLE IF NOT EXISTS branches (
     id SERIAL PRIMARY KEY,
     is_main boolean NOT NULL DEFAULT false,
@@ -156,4 +162,22 @@ CREATE TABLE IF NOT EXISTS supported_langs(
     lang_id INTEGER NOT NULL  REFERENCES langs(id),
     restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id)
 );
-
+-- 
+CREATE TABLE IF NOT EXISTS category(
+    id SERIAL PRIMARY KEY,
+    img Text not null,
+    user_id INTEGER NOT NULL  REFERENCES users(id),
+    textkey_id INTEGER NOT NULL  REFERENCES textkeys(id),
+    restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id)
+);
+-- 
+CREATE TABLE IF NOT EXISTS products(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL  REFERENCES users(id),
+    restaurants_id INTEGER NOT NULL  REFERENCES restaurants(id),
+    category_id INTEGER  REFERENCES category(id),
+    imgs text[] not null , 
+    discount INTEGER ,
+    textkey_id INTEGER NOT NULL  REFERENCES textkeys(id),
+    price INTEGER not null
+);

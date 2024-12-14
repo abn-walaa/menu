@@ -13,6 +13,9 @@ export enum ErrorHanlding {
     "string" = "must be a string ",
     "must_be_number" = "input must be a number ",
     "from_is_wrong" = "Error with fromating the input data !",
+    "category_not_found" = "Category not found !",
+    "restaurant_not_found" = "The restaurant is not found !",
+    "to_many_inputs" = "To many inputs!"
 }
 
 export default ErrorHanlding;

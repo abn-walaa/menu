@@ -7,6 +7,9 @@ import authTheOwnerTemp from "@middleware/authTheOwnerTemp";
 import { insert } from "@validation/product"
 import { zValidator } from "@hono/zod-validator";
 import zodErrorHanlding from "@helpers/errorHandling";
+import categoryRotuer from "./category";
+import productRouter from "./products";
+import infoRouter from "./info";
 
 
 
@@ -22,11 +25,8 @@ restaurantRouter.use(authUser);
 
 restaurantRouter.use(authTheOwnerTemp);
 
-restaurantRouter.post('/product', zValidator("form", insert, zodErrorHanlding),
-    async c => {
 
-
-        return c.json(await c.req.valid("form"))
-    })
+restaurantRouter.route('/category', categoryRotuer)
+restaurantRouter.route('/product', productRouter)
 
 export default restaurantRouter

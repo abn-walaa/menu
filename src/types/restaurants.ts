@@ -20,3 +20,10 @@ export type insert = (name: InsertObject[], logo: File, colors: string[],
     }>;
 export type getone = (id: number, lang_id: number) => Promise<OutputGetOne>;
 export type getOneData = (id: number) => Promise<{ id: number, user_id: number }>;
+
+export type OutputGetR = {
+    id: number, colors: string[], logo: string,
+    expire_date: string, name_symbol: string, time: Date, user_id: number, is_active: boolean
+}
+
+export type getUserRretaurants = (user_id: number) => Promise<OutputGetR[]>
