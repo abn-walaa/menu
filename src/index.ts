@@ -10,7 +10,9 @@ import { join } from 'path';
 import { serveStatic } from 'hono/bun';
 import branchRouter from '@routers/users/main'
 import restaurantRouter from '@routers/restaurant/main'
-
+import infoRouter from '@routers/restaurant/info'
+import { cors } from 'hono/cors'
+import getLnag from '@middleware/getLang'
 const app = new Hono({});
 
 const publicFolderPath = join(__dirname, '..', 'public');
@@ -23,11 +25,13 @@ if (!existsSync(publicFolderPath)) {
 if (!existsSync(imgsFolderPath)) {
   mkdirSync(imgsFolderPath);
 }
-
+app.use(cors())
+app.use(getLnag)
 app.route('/admin', adminRouter);
 app.route('/branch', branchRouter);
 app.route('/product', productRouter);
-app.route('/restrant/:restrant_id{[0-9]+}', restaurantRouter);
+app.route('/resturant-info', infoRouter)
+app.route('/restaurants/:restaurant_id{[0-9]+}', restaurantRouter);
 
 
 
@@ -45,7 +49,7 @@ app.onError((err, c) => {
   if (err instanceof DatabaseError) {
     console.error(err.constraint)
   }
-  console.error(err.stack,)
+  console.error(err)
   return c.json({
     status: "error",
     message: err.message,
@@ -55,9 +59,9 @@ app.onError((err, c) => {
 
 })
 
-
+console.log()
 
 export default {
   fetch: app.fetch,
-  port: 3000
+  port: process.env.PROT || 3000
 }

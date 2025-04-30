@@ -50,6 +50,7 @@ export const findByToken: types.findByToken = async (user_id, token) => {
         inner join admins a on a.id=$1 and a.id=adt.admin_id
         where a.id=$1 and adt.token =$2
         `, [user_id, token])
+
     return rows[0];
 }
 

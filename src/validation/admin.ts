@@ -50,3 +50,5 @@ export const permissionRole = z.object({
     role_id: z.number().gt(0),
     permission_id: z.number().gt(0)
 })
+
+// adding users

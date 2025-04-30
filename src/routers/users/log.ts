@@ -8,13 +8,19 @@ const app = new Hono();
 
 
 
-app.post('/', zValidator("json", zAdmin.login, zodErrorHanlding), async (c) => {
+app.post('/in', zValidator("json", zAdmin.login, zodErrorHanlding), async (c) => {
     const { email, password } = c.req.valid("json");
     const user = await usersDB.checkUser(email, password);
     const token = await usersDB.genToken(user.id);
     return c.json({ token, ...user })
 })
 
+app.post('/up', zValidator("json", zAdmin.login, zodErrorHanlding), async (c) => {
+    const { email, password } = c.req.valid("json");
+    const user = await usersDB.checkUser(email, password);
+    const token = await usersDB.genToken(user.id);
+    return c.json({ token, ...user })
+})
 
 export default app
 export { app as userlog }

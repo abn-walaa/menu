@@ -7,10 +7,10 @@ export type InsertObject = {
 
 
 export type insert = (items: InsertObject[], client: PoolClient) =>
-    Promise<{ id: number }>;
+    Promise<number>;
 
 export type insert2 = (items: InsertObject[], client: PoolClient, supported_langs_id: number[]) =>
-    Promise<{ id: number }>;
+    Promise<number>;
 
 export type getbylangname = (langName: string) =>
     Promise<{ id: number, langName: string, contextId: number, text: string }[]>;
