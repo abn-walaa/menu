@@ -32,6 +32,7 @@ categoryRotuer.get('/', async c => {
 
 categoryRotuer.get('/:id', async c => {
     const id = c.req.param("id");
+
     const data = await Category.getById(Number(id), c.var.restaurant.id);
     return c.json(data);
 })

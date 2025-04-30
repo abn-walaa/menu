@@ -4,7 +4,7 @@ import { HTTPException } from "hono/http-exception"
 
 
 export const zodErrorHanlding = async (r: any, c: any) => {
-
+    
     if (!r.success) {
         throw new HTTPException(400, { message: ErrorHanlding.invalid, cause: r.error.errors })
     }

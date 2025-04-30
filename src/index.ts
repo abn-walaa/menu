@@ -59,9 +59,9 @@ app.onError((err, c) => {
 
 })
 
-
+console.log()
 
 export default {
   fetch: app.fetch,
-  port: 3000
+  port: process.env.PROT || 3000
 }

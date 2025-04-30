@@ -9,7 +9,7 @@ const getLnag = createMiddleware(async (c, next) => {
 
     let lang = c.req.query('lang');
     const langs = await getall();
-    console.log(langs)
+    
     if (!lang) {
         const langData = langs.find(e => e.symbol === "en");
         c.set("lang", langData);
