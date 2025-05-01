@@ -1,7 +1,7 @@
 {
   "name": "muno",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts "
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.1",

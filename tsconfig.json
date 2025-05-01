@@ -24,7 +24,7 @@
         "./src/helpers/*"
       ],
       "@middleware/*": [
-        "./src/middleware/*"
+        "./src/middleware/*",
       ]
     }
   }
